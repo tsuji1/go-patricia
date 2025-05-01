@@ -483,7 +483,7 @@ func (trie *Trie) compact() *Trie {
 	return child
 }
 
-func (trie *Trie) findSubtree(prefix Prefix) (parent *Trie, root *Trie, found bool, leftover Prefix) {
+func (trie *Trie) FindSubtree(prefix Prefix) (parent *Trie, root *Trie, found bool, leftover Prefix) {
 	// Find the subtree matching prefix.
 	root = trie
 	for {
@@ -516,7 +516,7 @@ func (trie *Trie) findSubtree(prefix Prefix) (parent *Trie, root *Trie, found bo
 	}
 }
 
-func (trie *Trie) findSubtreePath(prefix Prefix) (path []*Trie, found bool, leftover Prefix) {
+func (trie *Trie) FindSubtreePath(prefix Prefix) (path []*Trie, found bool, leftover Prefix) {
 	// Find the subtree matching prefix.
 	root := trie
 	var subtreePath []*Trie
