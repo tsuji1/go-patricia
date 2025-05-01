@@ -43,6 +43,13 @@ type Trie struct {
 }
 
 // Public API ------------------------------------------------------------------
+func (t *Trie) Print() {
+	fmt.Printf("Prefix: %v", t.prefix)
+	if t.item != nil {
+		fmt.Printf(", Item: %v", t.item)
+	}
+	fmt.Println()
+}
 
 type Option func(*Trie)
 
