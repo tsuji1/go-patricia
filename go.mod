@@ -1,3 +1,3 @@
-module github.com/tchap/go-patricia/v2
+module github.com/tsuji1/go-patricia
 
-go 1.16
+go 1.24.2
