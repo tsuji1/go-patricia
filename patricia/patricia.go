@@ -43,6 +43,17 @@ type Trie struct {
 }
 
 // Public API ------------------------------------------------------------------
+func (t *Trie) Print() {
+	fmt.Printf("Prefix: %v", t.prefix)
+	if t.item != nil {
+		fmt.Printf(", Item: %v", t.item)
+	}
+	fmt.Println()
+}
+
+func (t *Trie) GetPrefix() Prefix {
+	return t.prefix
+}
 
 type Option func(*Trie)
 
@@ -115,7 +126,7 @@ func (trie *Trie) Set(key Prefix, item Item) {
 // nil interface as a valid value, even using zero value of any type is enough
 // to prevent this bad behaviour.
 func (trie *Trie) Get(key Prefix) (item Item) {
-	_, node, found, leftover := trie.findSubtree(key)
+	_, node, found, leftover := trie.FindSubtree(key)
 	if !found || len(leftover) != 0 {
 		return nil
 	}
@@ -131,7 +142,7 @@ func (trie *Trie) Match(prefix Prefix) (matchedExactly bool) {
 // MatchSubtree returns true when there is a subtree representing extensions
 // to key, that is if there are any keys in the tree which have key as prefix.
 func (trie *Trie) MatchSubtree(key Prefix) (matched bool) {
-	_, _, matched, _ = trie.findSubtree(key)
+	_, _, matched, _ = trie.FindSubtree(key)
 	return
 }
 
@@ -174,7 +185,7 @@ func (trie *Trie) VisitSubtree(prefix Prefix, visitor VisitorFunc) error {
 	}
 
 	// Locate the relevant subtree.
-	_, root, found, leftover := trie.findSubtree(prefix)
+	_, root, found, leftover := trie.FindSubtree(prefix)
 	if !found {
 		return nil
 	}
@@ -250,7 +261,7 @@ func (trie *Trie) Delete(key Prefix) (deleted bool) {
 	}
 
 	// Find the relevant node.
-	path, found, _ := trie.findSubtreePath(key)
+	path, found, _ := trie.FindSubtreePath(key)
 	if !found {
 		return false
 	}
@@ -343,7 +354,7 @@ func (trie *Trie) DeleteSubtree(prefix Prefix) (deleted bool) {
 	}
 
 	// Locate the relevant subtree.
-	parent, root, found, _ := trie.findSubtree(prefix)
+	parent, root, found, _ := trie.FindSubtree(prefix)
 	if !found {
 		return false
 	}
