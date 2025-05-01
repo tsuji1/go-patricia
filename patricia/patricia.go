@@ -527,6 +527,8 @@ func (trie *Trie) FindSubtreePath(prefix Prefix) (path []*Trie, found bool, left
 		// Compute what part of prefix matches.
 		common := root.longestCommonPrefixLength(prefix)
 		prefix = prefix[common:]
+		path = subtreePath
+		leftover = root.prefix[common:]
 
 		// We used up the whole prefix, subtree found.
 		if len(prefix) == 0 {
