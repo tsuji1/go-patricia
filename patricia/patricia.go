@@ -51,6 +51,10 @@ func (t *Trie) Print() {
 	fmt.Println()
 }
 
+func (t *Trie) GetPrefix() Prefix {
+	return t.prefix
+}
+
 type Option func(*Trie)
 
 // Trie constructor.
