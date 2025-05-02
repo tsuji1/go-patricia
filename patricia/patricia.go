@@ -536,10 +536,13 @@ func (trie *Trie) FindSubtreePath(prefix Prefix) (path []*Trie, found bool, left
 		subtreePath = append(subtreePath, root)
 
 		// Compute what part of prefix matches.
+		// マッチしたcommonはprefixの長さ
 		common := root.longestCommonPrefixLength(prefix)
+
+		// prefixの長さを更新，ここでprefixはマッチした部分を削除している
+		// 完全にマッチしたら0になる.マッチしない場合はマッチしなかった部分から下の文字列となる．
 		prefix = prefix[common:]
 		path = subtreePath
-		leftover = root.prefix[common:]
 
 		// We used up the whole prefix, subtree found.
 		if len(prefix) == 0 {
@@ -550,6 +553,10 @@ func (trie *Trie) FindSubtreePath(prefix Prefix) (path []*Trie, found bool, left
 		}
 
 		// Partial match means that there is no subtree matching prefix.
+		// rootというのは今のノードのことで，それのprefixと一致しているかどうか確認
+		//一致していない場合は，どこかでマッチしなかったということになるので，
+		// その部分をleftoverに格納して返す
+		// つまりipアドレスの場合はlefoverがある場合はparentがマッチした部分になる，しかも子ノードが存在することが確定
 		if common < len(root.prefix) {
 			leftover = root.prefix[common:]
 			return
